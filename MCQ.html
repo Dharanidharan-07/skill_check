@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Quiz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-container {
+            background-color: #ffffff;
+            border-left: 5px solid #6e8efb;
+            background: linear-gradient(to right, #ffffff, #f8f9ff);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .question {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            margin-left: 20px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .next-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+        }
+        
+        .next-button:hover {
+            background-color: #3e8e41;
+        }
+        
+        .result {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .login-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .login-button {
+            background: #2ecc71;
+            width: 100%;
+        }
+        
+        .share-button {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #results-container {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        
+        .quiz-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container" class="container">
+        <div class="login-form">
+            <h1>Web Services Quiz Login</h1>
+            <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67" alt="API login" 
+                 style="width:100%; max-height:200px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" required class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="rollno">Roll Number:</label>
+                    <input type="text" id="rollno" required class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required class="form-control">
+                </div>
+                <button type="submit" class="login-button">Start Quiz</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="quiz-container" class="quiz-container" style="display:none;">
+        <div style="text-align: center;">
+            <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                 alt="Coding and API concept" 
+                 class="quiz-image" 
+                 style="width: 90%; height: 300px; object-fit: cover; border: 3px solid #3498db; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        </div>
+        
+        <h1>MCQ Quiz Challenge</h1>
+        
+        <div class="quiz-header">
+            <div id="question-number">Question 1 of 20</div>
+            <div id="timer">00:00</div>
+        </div>
+        
+        <div id="quiz"></div>
+        
+        <button id="next" class="next-button">Next</button>
+        
+        <button id="submit">Submit Quiz</button>
+        
+        <div id="result" class="result"></div>
+        
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+    </div>
+
+    <div id="results-container">
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31" alt="Results" 
+             style="width:100%; max-height:200px; object-fit:cover; border-radius:8px; margin-bottom:20px;">
+        <h2>Quiz Results</h2>
+        <p id="user-details"></p>
+        <div id="final-score"></div>
+        <button onclick="location.reload()" class="restart-button">Take Quiz Again</button>
+        <button onclick="shareResults()" class="share-button">Share Results</button>
+    </div>
+
+    <script>
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+        });
+        const quizQuestions = [
+            {
+                question: "What does API stand for?",
+                options: ["Application Programming Interface", "Application Program Interface", "Application Programming Interchange", "Application Program Interchange"],
+                answer: "Application Programming Interface"
+            },
+            {
+                question: "Which of the following is a common format for API responses?",
+                options: ["XML", "HTML", "JSON", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "What is REST?",
+                options: ["Representational State Transfer", "Remote Execution State Transfer", "Resource State Transfer", "Rapid Execution State Transfer"],
+                answer: "Representational State Transfer"
+            },
+            {
+                question: "Which HTTP method is used to retrieve data from a server?",
+                options: ["POST", "GET", "PUT", "DELETE"],
+                answer: "GET"
+            },
+            {
+                question: "What is the purpose of an API key?",
+                options: ["To authenticate users", "To track usage", "To limit access", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "Which of the following is NOT a RESTful principle?",
+                options: ["Statelessness", "Cacheability", "Layered System", "Stateful Operations"],
+                answer: "Stateful Operations"
+            },
+            {
+                question: "What does JSON stand for?",
+                options: ["JavaScript Object Notation", "JavaScript Online Notation", "JavaScript Object Network", "JavaScript Object Name"],
+                answer: "JavaScript Object Notation"
+            },
+            {
+                question: "Which HTTP status code indicates a successful request?",
+                options: ["200", "404", "500", "403"],
+                answer: "200"
+            },
+            {
+                question: "What is the main purpose of a web service?",
+                options: ["To provide a user interface", "To allow communication between applications", "To store data", "To manage databases"],
+                answer: "To allow communication between applications"
+            },
+            {
+                question: "Which of the following is a popular API testing tool?",
+                options: ["Postman", "JMeter", "SoapUI", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "What is SOAP?",
+                options: ["Simple Object Access Protocol", "Simple Online Access Protocol", "Standard Object Access Protocol", "Standard Online Access Protocol"],
+                answer: "Simple Object Access Protocol"
+            },
+            {
+                question: "Which of the following is a characteristic of REST APIs?",
+                options: ["Stateless", "Cacheable", "Layered", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "What is the purpose of the 'Content-Type' header in an API request?",
+                options: ["To specify the type of data being sent", "To specify the type of data expected in the response", "Both A and B", "None of the above"],
+                answer: "Both A and B"
+            },
+            {
+                question: "Which of the following is a common authentication method for APIs?",
+                options: ["Basic Authentication", "OAuth", "API Key", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "What is the main advantage of using APIs?",
+                options: ["Reusability", "Scalability", "Interoperability", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "Which of the following is a common use case for APIs?",
+                options: ["Integrating third-party services", "Accessing databases", "Automating tasks", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "What is the difference between REST and SOAP?",
+                options: ["REST is stateless, SOAP is stateful", "REST uses JSON, SOAP uses XML", "REST is simpler, SOAP is more complex", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "Which of the following is a common API documentation format?",
+                options: ["OpenAPI", "Swagger", "RAML", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "What is the purpose of rate limiting in APIs?",
+                options: ["To prevent abuse", "To manage server load", "To ensure fair usage", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "Which of the following is a common response format for APIs?",
+                options: ["HTML", "XML", "JSON", "All of the above"],
+                answer: "All of the above"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedOptions = Array(quizQuestions.length).fill(null);
+        let timeElapsed = 0;
+        let timerInterval;
+
+        // Display the quiz questions
+        function displayQuiz() {
+            const quizElement = document.getElementById('quiz');
+            let quizContent = '';
+
+            quizQuestions.forEach((question, index) => {
+                quizContent += `<div class="question-container ${currentQuestion === index ? 'active' : 'hidden'}">
+                    <div class="question">${index + 1}. ${question.question}</div>
+                    <div class="options">`;
+
+                question.options.forEach(option => {
+                    const checked = selectedOptions[index] === option ? 'checked' : '';
+                    quizContent += `
+                        <div class="option">
+                            <input type="radio" id="q${index}-${option}" name="question${index}" value="${option}" ${checked} onchange="saveAnswer(${index}, '${option}')">
+                            <label for="q${index}-${option}">${option}</label>
+                        </div>`;
+                });
+
+                quizContent += `</div></div>`;
+            });
+
+            quizElement.innerHTML = quizContent;
+            document.getElementById('question-number').textContent = `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+            showQuestion(currentQuestion);
+        }
+
+        // Show current question and hide others
+        function showQuestion(index) {
+            const questions = document.querySelectorAll('.question-container');
+            questions.forEach((question, i) => {
+                question.style.display = i === index ? 'block' : 'none';
+            });
+        }
+
+        // Save selected answer
+        function saveAnswer(questionIndex, option) {
+            selectedOptions[questionIndex] = option;
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                displayQuiz();
+                showQuestion(currentQuestion);
+                updateProgressBar();
+            }
+        }
+
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuiz();
+                showQuestion(currentQuestion);
+                updateProgressBar();
+            }
+        }
+
+        // Calculate score
+        function calculateScore() {
+            score = 0;
+            quizQuestions.forEach((question, index) => {
+                if (selectedOptions[index] === question.answer) {
+                    score++;
+                }
+            });
+            return score;
+        }
+
+        // Display results
+        function showResults() {
+            const score = calculateScore();
+            document.getElementById('quiz-container').style.display = 'none';
+            
+            const name = document.getElementById('name').value;
+            const rollno = document.getElementById('rollno').value;
+            const email = document.getElementById('email').value;
+            
+            document.getElementById('user-details').innerHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Roll No:</strong> ${rollno}</p>
+                <p><strong>Email:</strong> ${email}</p>
+            `;
+            
+            document.getElementById('final-score').innerHTML = `
+                <h3 style="color:#2ecc71">Your Score: ${score}/${quizQuestions.length}</h3>
+                <p>${score >= quizQuestions.length/2 ? 'Great job!' : 'Keep practicing!'}</p>
+            `;
+            
+            document.getElementById('results-container').style.display = 'block';
+            clearInterval(timerInterval);
+        }
+
+        function shareResults() {
+            const score = calculateScore();
+            const email = document.getElementById('email').value;
+            const shareText = `I scored ${score}/${quizQuestions.length} on the Web Services Quiz! Try it yourself at [YOUR_URL_HERE]`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Quiz Results',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const shareUrl = `mailto:?subject=My Quiz Results&body=${encodeURIComponent(shareText)}`;
+                window.location.href = shareUrl;
+            }
+        }
+
+        // Update timer display
+        function updateTimer() {
+            timeElapsed++;
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            const progress = (currentQuestion + 1) / quizQuestions.length * 100;
+            progressBarFill.style.width = `${progress}%`;
+        }
+
+        // Start the quiz
+        document.addEventListener('DOMContentLoaded', () => {
+            displayQuiz();
+            
+            // Start timer
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // Next button event
+            document.getElementById('next').addEventListener('click', nextQuestion);
+            
+            // Submit button event
+            document.getElementById('submit').addEventListener('click', () => {
+                if (confirm('Are you sure you want to submit your answers?')) {
+                    showResults();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
